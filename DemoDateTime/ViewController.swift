@@ -17,14 +17,14 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        self.defaultDate.text = Date().description(with: .none) //.autoupdatingCurrent ->tự động lấy ngày theo locale
-        self.dateCalendar.text = self.dateTextFormatter(format: "dd/MM/YYYY HH:mm:ss")
-        self.timeCalendar.text = self.timeTextFormatter(format: "HH:mm:ss")
-        let _: Timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-            self.defaultDate.text = Date().description(with: .none) //.autoupdatingCurrent ->tự động lấy ngày theo locale
-            self.dateCalendar.text = self.dateTextFormatter(format: "dd/MM/YYYY HH:mm:ss")
-            self.timeCalendar.text = self.timeTextFormatter(format: "HH:mm:ss")
-        }
+//        self.defaultDate.text = Date().description(with: .none) //.autoupdatingCurrent ->tự động lấy ngày theo locale
+//        self.dateCalendar.text = self.dateTextFormatter(format: "dd/MM/YYYY HH:mm:ss")
+//        self.timeCalendar.text = self.timeTextFormatter(format: "HH:mm:ss")
+//        let _: Timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+//            self.defaultDate.text = Date().description(with: .none) //.autoupdatingCurrent ->tự động lấy ngày theo locale
+//            self.dateCalendar.text = self.dateTextFormatter(format: "dd/MM/YYYY HH:mm:ss")
+//            self.timeCalendar.text = self.timeTextFormatter(format: "HH:mm:ss")
+//        }
         
 //        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
 //            self.defaultDate.text = Date().description(with: .none) //.autoupdatingCurrent ->tự động lấy ngày theo locale
@@ -32,6 +32,17 @@ class ViewController: UIViewController {
 //            self.timeCalendar.text = self.timeTextFormatter(format: "HH:mm:ss")
 //        }
         
+        //Create my CADisplayLink here
+        let displayLink = CADisplayLink(target: self, selector: #selector(updateTime))
+//        displayLink.add(to: .main, forMode: .default)
+        displayLink.add(to: .current, forMode: .default)
+    }
+    
+    @objc
+    func updateTime(){
+        self.defaultDate.text = Date().description(with: .none) //.autoupdatingCurrent ->tự động lấy ngày theo locale
+        self.dateCalendar.text = self.dateTextFormatter(format: "dd/MM/YYYY HH:mm:ss")
+        self.timeCalendar.text = self.timeTextFormatter(format: "HH:mm:ss")
     }
     
     func dateTextFormatter(format: String) -> String {
